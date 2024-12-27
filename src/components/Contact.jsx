@@ -10,7 +10,7 @@ const Contact = ({ contact, onDelete }) => (
       </div>
       <div className={styles.contactDetails}>
         <p className={styles.name}>{contact.name}</p>
-        <p className={styles.number}>{contact.number}</p>
+        <p className={styles.number}>{contact.phone}</p>
       </div>
     </div>
     <button onClick={onDelete} className={styles.deleteButton}>

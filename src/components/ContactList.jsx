@@ -1,24 +1,14 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { createSelector } from 'reselect';
-import { deleteContact } from '../redux/contactsSlice';
-import styles from './ContactList.module.css';
+import { useSelector } from 'react-redux';
 import Contact from './Contact';
+import styles from './ContactList.module.css';
 
-// Memoizowany selektor
-const selectFilteredContacts = createSelector(
-  state => state.contacts.items,
-  state => state.filters.name.toLowerCase(),
-  (items, filter) =>
-    items.filter(contact => contact.name.toLowerCase().includes(filter))
-);
+const ContactList = ({ onDeleteContact }) => {
+  const contacts = useSelector(state => state.contacts.items);
+  const filter = useSelector(state => state.filters.name.toLowerCase());
 
-const ContactList = () => {
-  const filteredContacts = useSelector(selectFilteredContacts);
-  const dispatch = useDispatch(); // Zainicjowanie hooka useDispatch
-
-  const handleDelete = id => {
-    dispatch(deleteContact(id));
-  };
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter)
+  );
 
   return (
     <div className={styles.contactList}>
@@ -26,7 +16,7 @@ const ContactList = () => {
         <Contact
           key={contact.id}
           contact={contact}
-          onDelete={() => handleDelete(contact.id)}
+          onDelete={() => onDeleteContact(contact.id)}
         />
       ))}
     </div>

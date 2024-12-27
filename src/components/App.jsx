@@ -1,37 +1,39 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+} from '../redux/contactsSlice';
 import ContactForm from './ContactForm';
-import SearchBox from './SearchBox';
 import ContactList from './ContactList';
+import SearchBox from './SearchBox';
 import styles from './App.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact } from '../redux/contactsSlice';
-import { setFilter } from '../redux/filtersSlice';
 
 const App = () => {
-  const contacts = useSelector(state => state.contacts.items);
-  const filter = useSelector(state => state.filters.name);
   const dispatch = useDispatch();
+  const { items, loading, error } = useSelector(state => state.contacts);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  const handleAddContact = contact => {
+    dispatch(addContact(contact));
+  };
 
   const handleDeleteContact = id => {
     dispatch(deleteContact(id));
   };
 
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
   return (
     <div className={styles.appContainer}>
       <h1>Phonebook</h1>
-      <ContactForm />{' '}
-      {/* Walidacja i dodawanie kontaktów są obsługiwane w ContactForm */}
-      <SearchBox
-        filter={filter}
-        onFilterChange={value => dispatch(setFilter(value))}
-      />
-      <ContactList
-        contacts={filteredContacts}
-        onDeleteContact={handleDeleteContact}
-      />
+      <ContactForm onAddContact={handleAddContact} />
+      <SearchBox />
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      <ContactList contacts={items} onDeleteContact={handleDeleteContact} />
     </div>
   );
 };
