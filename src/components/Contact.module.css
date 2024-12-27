@@ -1,0 +1,60 @@
+.contact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-bottom: 10px; /* Odstęp między kartami kontaktów */
+}
+
+.contactInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px; /* Odstęp między ikonami a szczegółami kontaktu */
+}
+
+.iconWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px; /* Odstęp między ikoną użytkownika a ikoną telefonu */
+}
+
+.contactDetails {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Odstęp między imieniem a numerem telefonu */
+}
+
+.icon {
+  color: #333;
+}
+
+.name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.number {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+button {
+  padding: 6px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 40px;
+}
+
+button:hover {
+  background-color: #c82333;
+}
